@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class UrejanjeTrojice1{
+    public static void main(String [] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int pr = sc.nextInt();
+        int dr = sc.nextInt();
+        int tr = sc.nextInt();
+        
+        if (pr < dr && pr < tr && dr < tr) {
+            System.out.println(pr + " " + dr + " " + tr);
+        } 
+        else if (pr < dr && pr < tr && tr < dr) {
+            System.out.println(pr + " " + tr + " " + dr);
+        }
+        else if (dr < pr && dr < tr && pr < tr) {
+            System.out.println(dr + " " + pr + " " + tr);
+        }
+        else if (dr < pr && dr < tr && tr < pr) {
+            System.out.println(dr + " " + tr + " " + pr);
+        }
+        else if (tr < pr && tr < dr && pr < dr) {
+            System.out.println(tr + " " + pr + " " + dr);
+        }
+        else if (tr < pr && tr < dr && dr < pr) {
+            System.out.println(tr + " " + dr + " " + pr);
+        }
+        else if (pr < dr && dr == tr) {
+            System.out.println(pr + " " + dr + " " + tr);
+        }
+        else if (dr < pr && dr == tr) {
+            System.out.println(dr + " " + tr + " " + pr);
+        }
+        else if (dr < pr && pr == tr) {
+            System.out.println(dr + " " + pr + " " + tr);
+        }
+        else if (tr < pr && pr == dr) {
+            System.out.println(tr + " " + pr + " " + dr);
+        }
+        else if (pr == dr && pr == tr){
+            System.out.println(pr + " " + dr + " " + tr);
+        }
+        
+    }
+}
