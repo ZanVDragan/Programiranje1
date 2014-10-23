@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class Zaporedja {
+    public static void main(String [] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        //Dobi vrednosti.
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        int k = sc.nextInt();
+        
+        //Če je k različen od 0.
+        if (k != 0) {
+            //Če je k večji od 0 in a manjši ali enak b.
+            if (k > 0 && a < b) {
+                //Dokler je i manjši ali enak b, izpiši i in mu prištej k.
+                for (int i = a; i <= b; i = i + k) {
+                    System.out.println(i);
+                }
+            }
+            //Če je k manjši od 0 in a večji od b.
+            else if (k < 0 && a > b) {
+                //Dokler je i večji ali enak od b, izpiši i in mu prištej -k.
+                for (int i = a; i >= b; i = i + k) {
+                    System.out.println(i);
+                }
+            }
+            //Če sta a in b enaka.
+            else if (a == b) {
+                //Izpiši a in b.
+                System.out.println(a);
+            }
+            //Če se pogoja ne ujemata.
+            else {
+            //Izpiši NAPAKA.
+            System.out.println("NAPAKA");
+            }
+        }
+        //Če je k 0.
+        else {
+        //Izpiši NAPAKA.
+            System.out.println("NAPAKA");
+        }
+    }
+}
