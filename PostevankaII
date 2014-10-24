@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+class PostevankaII {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        //Preberi a in b.
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        
+        //Doloci pogoj a in b > 0, ter a < b.
+        if (a <= b && a > 0) {
+            //Doloci faktor.
+            int n = 1;
+            //Preverjaj ce je rezultat manjsi ali enak b.
+            while ((a * n) <= b) {
+                //Pomnozi in izpisi.
+                System.out.printf("%d * %d = %d%n", a, n, a * n);
+                //Povecaj n za 1.
+                n++;
+            }
+        }
+    }
+}
