@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+class Potenca {
+    public static void main(String [] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        //Preberi a in b.
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        
+        //Preveri pogoje: a > 0, b >= 0.
+        if (a > 0 && b >= 0) {
+            //Doloci stevilo mnozenj.
+            int n = 0;
+            //Doloci produkt.
+            int r = 1;
+            //Racunaj, dokler je n manjsi od b.
+            while (n < b) {
+                //Vsak obhod pomnozi rezultat z danim stevilom a.
+                r = r * a;
+                //Povecaj n.
+                n++;       
+            }            
+            //Izpisi.
+            System.out.println(r);         
+        }
+    }
+}
