@@ -1,0 +1,27 @@
+import java.util.Scanner;
+
+public class Delitelji {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        //Dobi deljenca.
+        int a = sc.nextInt();
+        //Določi delitelja.
+        int b = 1;
+        
+        //Dokler je b manjsi ali enak od a in ostanek enak 0.
+        while (b <= a) {
+            
+            //Zdeli a in b, ter dobi ostanek.
+            int r = a % b;            
+            
+            if (r == 0) {
+                //Izpisi.
+                System.out.println(b);
+            }
+            
+            //Povecaj b.
+            b++;
+        }
+    }
+}
