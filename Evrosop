@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class Evrosop {
+    public static void main (String [] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        //Uveljavi enEur, dvaEur, blagajna, obhod.
+        int enEur = 0;
+        int dvaEur = 0;
+        int blagajna = 0;
+        int obhodi = 0;
+        
+        //Dokler je na vhodu stevilo in je blagajn manjsa ali enaka i, povecaj i za 1.
+        for (int i = 0; sc.hasNextInt() && blagajna <= i; i++) {
+        
+            //Preberi vnos.
+            int vnos = sc.nextInt();
+            
+            //Ce je vnos 1, pristej enEur.
+            if (vnos == 1) {
+                enEur++;
+            }            
+            //Ce je vnos dva, pristej dvaEur in odstej enEur 1, ter pristej blagajni 2.
+            else if (vnos == 2) {                
+                dvaEur++;
+                enEur--;
+                blagajna += 2;
+            }
+            //Obhodu pristej 1.
+            obhodi++;
+        }
+        //Ce je blagajna manjsa od i, izpisi Bankrot.
+        if (blagajna > obhodi) {
+            System.out.println("BANKROT");
+        }
+        //Drugace izpisi stevilo enEur in dvaEur.
+        else {
+            System.out.printf("%d%n%d%n", enEur, dvaEur);
+        }
+    }
+}
