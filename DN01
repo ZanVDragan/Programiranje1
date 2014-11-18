@@ -1,0 +1,58 @@
+import java.util.Scanner;
+
+public class DN01_XXXXXXXX {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        //Preberi a in b.
+        long a = sc.nextLong();
+        long b = sc.nextLong();
+        //Doloci zacetno stevilo veckratnikov.
+        long stVec = 0;
+        
+        //Ce sta a in b enaka, ali b je manjse ali enako 1000000.
+        if (a == b || b <= 1000000) {
+            //Dokler je a manjsi ali enak b.
+            while (a <= b) {
+                //Ce je ostanek pri deljenju a z 2/3/5 enak nic, povecaj stevilo stVec.
+                if (a % 2 == 0 || a % 3 == 0 || a % 5 == 0) {
+                    stVec++;
+                }
+                //Povecaj a.
+                a++;
+            }
+        }
+        //Ce je b vecji od 1000000.
+        else if (b > 1000000) {
+            //Izracunaj razliko med b in a.
+            long razlika = b - a;
+            
+            //Izracunaj kolicnik razlike in 30 - v obmocju naravnih stevil se stevila deljiva z 2/3/5 ponavljajo na vsakih 30 stevil.
+            long kolicnik = razlika / 30;
+            //Dobljeni kolicnik pomnozi z 22 - znotraj vsakih 30 stevil je natanko 22 stevil deljivo z 2/3/5.
+            long zmnozek = kolicnik * 22;
+            
+            //Izracunaj ostanek pri deljenju razlike in 30 - toliko stevil ostane nepreverjenih.
+            long ostanek = razlika % 30;
+            //Uveljavi razpon, ki poteka od zacetka ostanka do b - ta stevila je potrebno preveriti.
+            long razpon = b - ostanek;
+            //Uveljavi stOstanka.
+            long stOstanka = 0;
+            
+            //Dokler je razpon manjsi ali enak b.
+            while (razpon <= b) {
+                //Ce je razpon deljeno z 2/3/5 enak nic, povecaj stOstanka.
+                if (razpon % 2 == 0 || razpon % 3 == 0 || razpon % 5 == 0) {
+                    stOstanka++;
+                }
+                //Naslednje stevilo znotraj razpona.
+                razpon++;
+            }
+            
+            //Sestej zmnozek in stOstanka v stVec.
+            stVec = zmnozek + stOstanka;
+        }
+        //Izpisi stevilo veckratnikov.
+        System.out.println(stVec);
+    }
+}
