@@ -1,0 +1,85 @@
+import java.util.Scanner;
+//V tej resitvi je potrebna uporaba Arrayev (Tabel).
+import java.util.Arrays;
+
+public class DN02_XXXXXXXX {
+    public static void main (String [] args) {
+        
+        //Dobi vrednosti iz tabele.
+        long [] vred = vrednosti();
+        
+        //Nastavi prvi kup, konstanto in dneve, glede na ustrezne podatke v tabeli.
+        long p = vred [0];
+        long k = vred [1];
+        long d = vred [2];
+        
+        //Definiraj potrebne spremenljivke.
+        long odstranjene = 0;
+        long rezultat = 0;
+        long maxSkatla = p;
+        long tempSkatla = 1;
+        long stolpec = 1;
+        
+        //Zanka naj tece od 4. mesta v tabeli in do dnevi + 3 (nadomesti za izgubljena mesta v tabeli).
+        for (int i = 4; i <= d + 3; i++) {
+            
+            //Dobi vrednosti skatel na posamezni poziciji v tabeli.
+            tempSkatla = vred [i];
+            
+            //Ce je skatla manjsa od maksimalne skatle, odstej prvo od slednje. Tako dobis odstranjene skatle.
+            if (tempSkatla < maxSkatla) {
+                odstranjene = maxSkatla - tempSkatla;
+            }
+            //Ce zgornje ne drzi, pojdi v naslednji stolpec in izracunaj maksimalno skatlo po formuli...
+            else {
+                while (tempSkatla > maxSkatla) {
+                    stolpec++;
+                    maxSkatla = stolpec * p + (stolpec * (stolpec - 1) / 2 * k);
+                }
+                //Izracun odstranjenih skatel.
+                odstranjene = maxSkatla - tempSkatla;
+            }            
+            //Rezultat je vsota delnih razlik odstranjenih skatel.
+            rezultat += odstranjene;
+        }
+        //Izpisi rezultat.
+        System.out.println(rezultat);
+    }
+    
+    //Metoda za pridobitev vseh vrednosti in sortiranje skatel.
+    private static long [] vrednosti() {
+        Scanner sc = new Scanner (System.in);
+        
+        //Deklariraj tabelo, ki bo imela vnesene vrednosti (velikost je podana z najvecjim moznim stevilom skatel).
+        long [] vrednosti = new long [100004];
+                
+        //Dobi vrednosti za prvi kup, konstanto in dneve.
+        long prviKup = sc.nextLong();
+        long konstanta = sc.nextLong();
+        long dnevi = sc.nextLong();
+        
+        //Vnesi jih v tabelo.
+        vrednosti [0] = prviKup;
+        vrednosti [1] = konstanta;
+        vrednosti [2] = dnevi;
+        
+        //Doloci indeks, ki bo tekel od 3. mesta dalje.
+        int indeks = 3;
+        
+        //"i" tece od 3. mesta dalje, dokler je manjsi od dnevi + 2 (nadomesti izgubljena mesta); ... ; povecaj i.
+        for (int i = 3; i <= dnevi + 2; i++) {
+            //Dobi vrednosti skatel.
+            long stSkatle = sc.nextLong();
+            //Shrani te vrednosti v tabelo.
+            vrednosti [i] = stSkatle;
+            //Povecaj indeks, da sledi tabeli.
+            indeks ++;
+        }
+        
+        //Sortiraj tabelo od indeksa 3 do konca = indeks + 1. (Arrays.sort(fromIndex, toIndex) - interval je pol zaprt [) ).
+        Arrays.sort(vrednosti, 3, indeks + 1);
+        
+        //Vrni tabelo vrednosti.
+        return vrednosti;
+    }
+}
