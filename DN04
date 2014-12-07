@@ -1,0 +1,135 @@
+// DN04_XXXXXXXX
+
+public class Tocka {
+
+    public double x, y;
+    
+    //Deklariraj objekt Tocka, ki nastavi vrednosti x in y.
+    public Tocka (double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    //Metoda, ki vrne x.
+    public double vrniX() {
+        return this.x;
+    }
+
+    //Metoda, ki vrne y.
+    public double vrniY() {
+        return this.y;
+    }
+    
+    //Metoda, ki pretvori x in y v tip String. Se prej pa ju pretvori v dvodecimalni zapis.
+    public String toString() {
+        return "(" + String.format("%.2f", x) + ", " + String.format("%.2f", y) +")";
+    }
+
+    //Metoda, ki doloci x in y pri tocki izhodisce.
+    public static Tocka izhodisce() {
+        Tocka izhodisce = new Tocka(0, 0);
+        return izhodisce;
+    }
+
+    //Metoda, ki izracuna razdaljo od ene do druge tocke.
+    public double razdalja(Tocka t) {
+        return Math.sqrt(Math.pow((t.x - x), 2) + Math.pow((t.y - y), 2));
+    }
+
+    //Metoda, ki vrne razdaljo od izhodisca do tocke.
+    public double razdaljaOdIzhodisca() {
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    }
+}
+_________________________________________________________________________________________________
+// DN04_XXXXXXXX
+
+public class Premica {
+
+    //Doloci spremenljivke.
+    private double x, y, k, n;
+
+    //Deklarira objekt Premica.
+    public Premica(double k, double n) {
+        this.k = k;
+        this.n = n;
+    }
+
+    //Vrne k.
+    public double vrniK() {
+        return this.k;
+    }
+
+    //Vrne n.
+    public double vrniN() {
+        return this.n;
+    }
+
+    //Poda premico v String obliki.
+    public String toString() {
+        return "y = " + String.format("%.2f", k) + " x + " + String.format("%.2f", n);
+    }
+
+    //Vrne tocko, skozi katero poteka premica pri izbranem x.
+    public Tocka tockaPriX(double x) {
+        y = k * x + n;
+        return new Tocka(x, y);
+    }
+
+    //Vrne premico, ki poteka skozi izbrano tocko.
+    public static Premica skoziTocko(double k, Tocka t) {
+        double n = t.vrniY() - k * t.vrniX();
+        return new Premica(k, n);
+    }
+
+    //Vrne vzporednico premici skozi izbrano tocko.
+    public Premica vzporednica(Tocka t) {
+        double n1 = t.vrniY() - k * t.vrniX();
+        return new Premica(k, n1);
+    }
+
+    //Vrne pravkotnoico na premico skozi izbrano tocko.
+    public Premica pravokotnica(Tocka t) {
+        double k1 = -1/k;
+        double n1 = t.vrniY() - k1 * t.vrniX();
+        Premica pravokotnica = new Premica(k1, n1);
+        return new Premica(k1, n1);
+    }
+
+    //Vrne presecisce dveh premic, katerih k-ja se razlikujeta za manj kot epsilon.
+    public Tocka presecisce(Premica p, double epsilon) {
+        if (Math.abs(k - p.k) < epsilon) {
+            return null;
+        } else {
+            x = (p.vrniN() - n) / (k - p.vrniK());
+            y = k * x + n;
+            return new Tocka(x, y);
+        }
+    }
+
+    //Vrne pravokotno projekcijo tocke na premico.
+    public Tocka projekcija(Tocka t) {
+        double k1 = pravokotnica(t).vrniK();
+        double n1 = pravokotnica(t).vrniN();
+        x = (n - n1) / (k1 - k);
+        y = k * x + n;
+        return new Tocka(x, y);
+    }
+    
+    //Vrne razdaljo med tocko in premico.
+    public double razdalja(Tocka t) {
+        return Math.sqrt(Math.pow((t.x - projekcija(t).vrniX()), 2) + Math.pow((t.y - projekcija(t).vrniY()), 2));
+    }
+    
+    //Vrne razdaljo med premico in koordinatnim izhodiscem.
+    public double razdaljaOdIzhodisca() {
+        Tocka t = Tocka.izhodisce();
+        return Math.sqrt(Math.pow(- projekcija(t).vrniX(), 2) + Math.pow(- projekcija(t).vrniY(), 2));
+    }
+    
+    //Vrne razdaljo med dvema vzporednima premicama.
+    public double razdalja(double n) {
+        double n1 = vrniN();
+        return (Math.abs(n1 - n) / Math.sqrt(Math.pow(k, 2) + 1));
+    }
+}
