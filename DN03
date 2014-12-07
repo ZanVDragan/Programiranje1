@@ -1,0 +1,94 @@
+import java.util.Scanner;
+
+public class DN03_XXXXXXXX {
+    public static void main (String [] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        //Dobi vrednosti: visina, sirina, potenca.
+        long visina = sc.nextLong();
+        long sirina = sc.nextLong();
+        int potenca = sc.nextInt();
+        
+        //Uveljavi rezultat in ostanek.
+        long rezultat = 0;
+        long ostanek = 0;
+        
+        //Izracunaj ploscino stene.
+        long plLik = visina * sirina;
+        
+        //Dobi stranico ploscice iz metode stranica ploscice.
+        long strPlos = stranicaPloscice(potenca);
+        //Izracunaj ploscino ploscice.
+        long plPlos = strPlos * strPlos;
+        
+        //Dobi ostanek1, ostanek2 in presek iz ustreznih metod.
+        long ostanek1 = dobiOstanek1(visina, sirina, strPlos);
+        long ostanek2 = dobiOstanek2(visina, sirina, strPlos);
+        long presek = dobiPresek(visina, sirina, strPlos);
+        
+        //Dokler sta ploscini stene in ploscice vecji od 0, ...
+        while (plLik > 0 && plPlos > 0) {
+            //Rezultatu pristej (ploscina stene - ostanek) deljeno z ploscino ploscice.
+            rezultat += (plLik - ostanek) / plPlos;
+            //Ploscino stene nastavi na ostanek.
+            plLik = ostanek;
+            //Ce je ostanek1 ali ostanek2 neniceln, ...
+            if (ostanek1 != 0 || ostanek2 != 0) {
+                //Dobi ostanek1, ostanek2 in presek iz ustrezne metode.
+                ostanek1 = dobiOstanek1(visina, sirina, strPlos);
+                ostanek2 = dobiOstanek2(visina, sirina, strPlos);
+                presek = dobiPresek(visina, sirina, strPlos);
+                //Sestej oba ostanka in odstej njun presek.
+                ostanek = ostanek1 + ostanek2 - presek;
+                //Rezultatu pristej (ploscina stene - ostanek) deljeno z ploscino ploscice.
+                rezultat += (plLik - ostanek) / plPlos;
+                //Ploscino stene nastavi na ostanek.
+                plLik = ostanek;
+            }
+            //Nova stranica ploscice je prejšnja deljena z 2.
+            strPlos = strPlos / 2;
+            //Nova ploscina je kvadrat stranic ploscic.
+            plPlos = strPlos * strPlos;
+        }
+        //Izpisi rezultat.
+        System.out.println(rezultat);
+    }
+    //Metoda za izracun stranice ploscice.
+    private static long stranicaPloscice(int potenca) {
+        //Stranice ploscice je potenca 2 na v naprej doloceno zacetno potenco.
+        double strPloscice = Math.pow(2, potenca);
+        //Pretvorba iz tipa double v long (tukaj lahko uporabimo to pretvorbo, ker ni decimalnih mest oz. nas niti ne zanimajo).
+        long strPl = (long) strPloscice;
+        //Vrni stranico ploscice.
+        return strPl;
+    }
+    //Metoda za izracun ostanka 1.
+    private static long dobiOstanek1 (long visina, long sirina, long strPlos) {
+        //Nova visina je modul visine in stranice ploscice.
+        long visina1 = visina % strPlos;
+        //Ostanek 1 je zmnozek visine1 in sirine.
+        long ostanek1 = visina1 * sirina;
+        //Vrni ostanek1.
+        return ostanek1;
+    }
+    //Metoda za izracun ostanka 2.
+    private static long dobiOstanek2 (long visina, long sirina, long strPlos) {
+        //Nova sirina je modul sirine in stranice ploscice.
+        long sirina1 = sirina % strPlos;
+        //Ostanke 2 je zmnozek visine in sirine1.
+        long ostanek2 = visina * sirina1;
+        //Vrni ostanek2.
+        return ostanek2;
+    }
+    //Metoda za izracun preseka.
+    private static long dobiPresek(long visina, long sirina, long strPlos) {
+        //Nova visina je modul visine in stranice ploscice.
+        long visina1 = visina % strPlos;
+        //Nova sirina je modul visine in stranice ploscice.
+        long sirina1 = sirina % strPlos;
+        //Presek je zmnozek visine1 in sirine1
+        long presek = visina1 * sirina1;
+        //Vrni presek.
+        return presek;
+    }
+}
