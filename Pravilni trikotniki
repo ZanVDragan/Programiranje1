@@ -1,0 +1,84 @@
+/*
+**Ž.V.D.
+**2014/15
+*/
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class PravilniT {
+	public static void main (String [] args) {
+		Scanner sc = new Scanner(System.in);
+		//Dobi podatke.
+		int limit = sc.nextInt();
+		int lines = sc.nextInt();
+		
+		int [][] points = new int [lines][2];
+		
+		for (int i = 0; i < lines; i++) {
+			points[i][0] = sc.nextInt();
+			points[i][1] = sc.nextInt();
+		}
+		//Izracuanj okolico razdalje, kjer se lahko nahaja razlika.
+		double around = Math.pow(10, -limit);
+		//Deklariraj najdaljso in najkrajso stranico.
+		double max = 0.0;
+		double min = 0.0;
+		//Deklariraj spremenljivko za preverjanje, ce obstaja kaksen pravilni trikotnik.
+		boolean one = false;
+		//Pojdi cez tabelo (vzami prvo tocko, nato naslednjo in naslednjo od naslednje).
+		for (int i = 0; i < lines - 2; i++) {
+			for (int j =  i + 1; j < lines - 1; j++) {
+				for (int k = j + 1; k < lines; k++) {
+					//Dobi dolzino med prvo in drugo tocko.
+					double a = dist(points[i][0], points[i][1],
+									points[j][0], points [j][1]);
+					//Dobi dolzino med prvo in tretjo tocko.
+					double b = dist(points[i][0], points[i][1],
+									points[k][0], points [k][1]);
+					//Dobi dolzino med drugo in tretjo tocko.
+					double c = dist(points[j][0], points[j][1],
+									points[k][0], points [k][1]);
+					//Dobi najdaljso/najkrajso stranico.
+					max = max(a, b, c);
+					min = min(a, b, c);
+					//Ce je razlika najdaljsa - najkrajsa znotraj okolice, izpisi indekse tock.
+					if (in(around, max, min)) {
+						System.out.printf("%d %d %d%n", i, j, k);
+						//Trikotnik obstaja - nastavi ustrezno vrednost.
+						one = true;
+					}
+				}
+			}
+		}
+		//Ce trikotnika ni, izpis "BREZ".
+		if (!one)
+			System.out.println("BREZ");
+	}
+	//Metoda, ki izracuna razdaljo med tockama.
+	private static double dist (int x1, int y1, int x2, int y2) {
+		return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+	}
+	//Metoda, ki vrne najdaljso stranico.
+	private static double max (double a, double b, double c) {
+		if ((a > b && a > c) || (a == b && a > c) || (a == c && a > b))
+			return a;
+		else if ((b > a && b > c) || (b == c && b > a))
+			return b;
+		else
+			return c;
+	}
+	//Metoda, ki vrne najkrajso stranico.
+	private static double min (double a, double b, double c) {
+		if ((a < b && a < c) || (a == b && a < c) || (a == c && a < b))
+			return a;
+		else if ((b < a && b < c) || (b == c && b < a))
+			return b;
+		else
+			return c;
+	}
+	//Metoda, ki pove, ce razlika dolzin stranic lezi znotraj okolice 10^(-limita) * najkrajsa.
+	private static boolean in (double around, double max, double min) {
+		return (around * min > (max - min));
+	}
+}
