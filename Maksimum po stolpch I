@@ -1,0 +1,52 @@
+/*
+**Ž.V.D.
+**2014/15
+*/
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Maks1 {
+	public static void main (String [] args) {
+		Scanner sc = new Scanner(System.in);
+		//Dobi podatke.
+		int [][] arr = new int [sc.nextInt()][sc.nextInt()];
+		
+		int [] out = new int [arr[0].length];
+		
+		int [] sorting = new int [arr.length];
+		
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr[i].length; j++) {
+				arr[i][j] = sc.nextInt();
+			}
+		}
+		//Pojdi cez vrstice v stolpcu.
+		for (int i = 0; i < arr[0].length; i++) {
+			for (int j = 0; j < arr.length; j++) {
+				//Dobi elemente in jih shrani v tabelo za sortiranje.
+				sorting[j] = arr[j][i];
+			}
+			//Sortiraj dobljeno tabelo.
+			sort(sorting);
+			//Shrani najvevji elemtn v tabelo izpisov.
+			out[i] = sorting[0];
+		}
+		//Izpisi.
+		System.out.println(Arrays.toString(out));
+	}
+	//Metoda za sortiranje (vrne od max do min).
+	public static int [] sort (int [] arr) {
+		int temp = 0;
+		for (int i = arr.length - 1; i > 0; i--) {
+			for (int j = 0; j < arr.length - 1; j++) {
+				if (arr[j] < arr[j + 1]) {
+					temp = arr[j];
+					arr[j] = arr[j + 1];
+					arr[j + 1] = temp;
+				}
+			}
+		}
+		return arr;
+	}
+}
