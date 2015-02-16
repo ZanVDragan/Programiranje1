@@ -1,0 +1,72 @@
+/*
+**Ž.V.D.
+**2014/15
+*/
+import java.util.Scanner;
+import java.util.Arrays;
+public class Maks2 {
+	public static void main (String [] args) {
+		Scanner sc = new Scanner(System.in);
+		//Dobi podatke.
+		int row = sc.nextInt();
+		
+		int [][] arr = new int [row][];
+		
+		int max = 0;
+		
+		for (int i = 0; i < row; i++) {
+			int line = sc.nextInt();
+			int [] temp = new int [line];
+			for (int j = 0; j < line; j++) {
+				temp[j] = sc.nextInt();
+			}
+			if (line > max)
+				max = line;
+			arr[i] = temp;
+		}
+		//Ustvari vecjo tabelo z dolzino najdaljse vrstice.
+		for (int i = 0; i < row; i++) {
+			arr[i] = Arrays.copyOf(arr[i], max);
+		}
+		//Deklariraj pomozno tabelo za sortiranje.
+		int [] sort = new int [row];
+		//Deklariraj izhodno tabelo.
+		int [] out = new int [max];
+		for (int i = 0; i < max; i++) {
+			for (int j = 0; j < row; j++) {
+				//Dobi stevila v trenutnem stolpcu.
+				sort[j] = arr[j][i];
+			}
+			//Sortiraj trenutni stolpec.
+			sorter(sort);
+			if (sort[0] != 0)
+				//Ce najvecje stevilo ni 0, ga shrani v izhodno tabelo.
+				out[i] = sort[0];
+			else {
+				//Sicer poisci prvo nenicelno stevilo.
+				for (int j = 0; j < sort.length; j++) {
+					if (sort[j] != 0) {
+						out[i] = sort[j];
+						break;
+					}
+				}
+			}
+		}
+		//Izpisi.
+		System.out.println(Arrays.toString(out));
+	}
+	//Metoda za iskanje maksimuma (insertion sort).
+	private static int [] sorter (int [] sort) {
+		int temp = 0;
+		for (int i = sort.length - 1; i > 0; i--) {
+			for (int j = 0; j < sort.length - 1; j++) {
+				if (sort[j] < sort[j + 1]) {
+					temp = sort[j];
+					sort[j] = sort[j + 1];
+					sort[j + 1] = temp;
+				}
+			}
+		}
+		return sort;
+	}
+}
