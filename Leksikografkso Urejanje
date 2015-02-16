@@ -1,0 +1,57 @@
+/*
+**Žan Valter Dragan
+**2014/15
+*/
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Leksikon {
+	public static void main (String [] args) {
+		Scanner sc = new Scanner(System.in);
+		//Dobi podatke.
+		int lines = sc.nextInt();
+		int length = sc.nextInt();
+		
+		int [][] arr = new int [lines][length];
+		
+		for (int i = 0; i < lines; i++) {
+			for (int j = 0; j < length; j++) {
+				arr[i][j] = sc.nextInt();
+			}
+		}
+		//Sortiraj podatke in jih izpisi.
+		for (int i = 0; i < lines; i++) {
+			sort(arr);
+			System.out.println(Arrays.toString(arr[i]));
+		}
+	}
+	//Metoda za urejanje podatkov (insertion sort nekoliko modificiran).
+	private static int [][] sort (int [][] arr) {
+		int [] temp;
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = i; j > 0; j--) {
+				//Pojdi cez stevila vektorja.
+				for (int k = 0; k < arr[i].length; k++) {
+					//Dokler sta stevili na istem mestu enaki, pojdi naprej.
+					while (k < arr[i].length - 1 && arr[j][k] == arr[j - 1][k]) {
+						k++;
+					}
+					//Ce je stevilo na poziciji k trenutnega vektorja manjse od predhodnega, ju zamenjaj.
+					if (arr[j][k] < arr[j - 1][k]) {
+						temp = arr[j - 1];
+						arr[j - 1] = arr[j];
+						arr[j] = temp;
+						//Koncaj iskanje.
+						break;
+					}
+					//Ce je stevilo na poziciji k trenutnega vektorja vecje od predhodnega, ustavi iskanje.
+					else if (arr[j][k] > arr[j -  1][k])
+						break;
+				}
+			}
+		}
+		//Vrni urejeno tabelo.
+		return arr;
+	}
+}
