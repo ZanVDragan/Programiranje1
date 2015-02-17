@@ -1,0 +1,55 @@
+/*
+**Z.V.D.
+**2014/15
+*/
+
+public class Filozof {
+	private Filozof levi;
+	private Filozof desni;
+	private boolean levaP;
+	private boolean desnaP;
+	
+	public Filozof() {}
+	
+	public void nastaviSoseda (Filozof levi, Filozof desni) {
+		this.levi = levi;
+		this.desni = desni;
+	}
+	
+	public int kolikoPalicicDrzi() {
+		int drzi = 0;
+		if (this.levaP)
+			drzi++;
+		if (this.desnaP)
+			drzi++;
+		return drzi;
+	}
+	
+	public void primiLevo() {
+		if (!this.levi.desnaP)
+			this.levaP = true;
+	}
+	
+	public void izpustiLevo() {
+		this.levaP = false;
+	}
+	
+	public void primiDesno() {
+		if (!this.desni.levaP)
+			this.desnaP = true;
+	}
+	
+	public void izpustiDesno() {
+		this.desnaP = false;
+	}
+	
+	public int steviloFilozofov() {
+		int i = 1;
+		Filozof temp = this;
+		while (temp.desni != this) {
+			i++;
+			temp = temp.desni;
+		}
+		return i;
+	}
+}
