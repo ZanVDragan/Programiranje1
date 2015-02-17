@@ -1,0 +1,55 @@
+/*
+**Žan Valter Dragan
+**2014/15
+*/
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class SahTurnir {
+	public static void main (String [] args) {
+		Scanner sc = new Scanner(System.in);
+		//Dobi podatke.
+		int num = sc.nextInt();
+		
+		int [][] players = new int [num + 1][2];
+		//Pazi na pozicijo v tabelo (zacne se z 1!)
+		//Ustrezna mora biti tudi velikost tabele (za 1 vecje).
+		for (int i = 1; i < players.length; i++) {
+			players[i][0] = i;
+		}
+		while (sc.hasNextInt()) {
+			int white = sc.nextInt();
+			int black = sc.nextInt();
+			int point = sc.nextInt();
+			if (point == 1)
+				players[white][1] += 2;
+			else if (point == -1)
+				players[black][1] += 2;
+			else if (point == 0) {
+				players[white][1] += 1;
+				players[black][1] += 1;
+			}
+		}
+		//Uredi tabelo.
+		sort(players);
+		//Izpisi rezultat.
+		for (int i = 1; i < players.length; i++) {
+			System.out.printf("%d %d%n", players[i][0], players[i][1]);
+		}
+	}
+	//Metoda za urejanje tabele (insertion sort).
+	public static int [][] sort (int [][] arr) {
+		int [] temp;
+		for (int i = arr.length - 1; i > 0; i--) {
+			for (int j = i; j < arr.length - 1; j++) {
+				if (arr[j][1] < arr[j + 1][1]) {
+					temp = arr[j];
+					arr[j] = arr[j + 1];
+					arr[j + 1] = temp;
+				}
+			}
+		}
+		return arr;
+	}
+}
